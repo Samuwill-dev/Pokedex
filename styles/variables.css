@@ -1,0 +1,10 @@
+:root {
+    --primary-background-color: rgb(117, 115, 115);
+    --secondary-background-color: rgb(54, 53, 52);
+    --accent-color: rgb(243, 104, 5);
+    --accent-color-hover: rgb(138, 60, 4);
+    --text-color: rgb(255, 255, 255);
+    --outlines: rgb(0, 0, 0);
+    --border-radius: 16px;
+
+}
