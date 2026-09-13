@@ -1,1 +1,16 @@
+.pokeball {
+    height: 40px;
+    width: 40px;
+}
 
+.search-input {
+    align-self: center;
+}
+
+
+.card {
+    width: 200px;
+    height: 200px;
+    border: var(--border);
+    border-radius: var(--border-radius);
+}

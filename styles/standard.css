@@ -40,6 +40,10 @@ main {
     flex: 1;
 }
 
-h1 {
-    font-family:  Helvetica, sans-serif;
+
+
+input {
+    padding: 6px 0 4px 8px;
+    cursor: pointer;
 }
+
