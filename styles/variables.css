@@ -1,10 +1,46 @@
 :root {
-    --primary-background-color: rgb(117, 115, 115);
-    --secondary-background-color: rgb(54, 53, 52);
-    --accent-color: rgb(243, 104, 5);
-    --accent-color-hover: rgb(138, 60, 4);
-    --text-color: rgb(255, 255, 255);
-    --outlines: rgb(0, 0, 0);
-    --border-radius: 16px;
+  /* Basis */
+  --primary-background-color: rgb(245, 246, 250);
+  --secondary-background-color: rgb(59, 76, 202);   /* Pokéball-Blau */
+  --accent-color: rgb(238, 21, 21);                 /* Pokéball-Rot */
+  --accent-color-hover: rgb(178, 12, 12);
+  --text-color: rgb(30, 30, 35);
+  --text-color-inverse: rgb(255, 255, 255);
+  --outlines: rgb(20, 20, 25);
+  --border-radius: 16px;
 
+  /* Zusätzlich */
+  --highlight-color: rgb(255, 203, 5);              /* Pikachu-Gelb */
+  --muted-color: rgb(140, 145, 160);
+  --surface-color: rgb(255, 255, 255);
+  --success-color: rgb(56, 168, 92);
+  --danger-color: rgb(200, 40, 40);
+
+  --border-width: 3px;
+  --border: var(--border-width) solid var(--outlines);
+  --border-radius-sm: 8px;
+  --border-radius-pill: 999px;
+
+  --shadow-sm: 0 2px 0 var(--outlines);
+  --shadow-md: 0 4px 0 var(--outlines), 0 6px 12px rgba(0,0,0,.2);
+  --gradient-ball: linear-gradient(
+      to bottom,
+      var(--accent-color) 0 48%,
+      var(--outlines) 48% 52%,
+      var(--surface-color) 52% 100%);
+
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 32px;
+
+  /* Typen-Farben */
+  --type-fire: rgb(238, 129, 48);
+  --type-water: rgb(99, 144, 240);
+  --type-grass: rgb(122, 199, 76);
+  --type-electric: rgb(247, 208, 44);
+  --type-psychic: rgb(249, 85, 135);
+  --type-dark: rgb(112, 87, 70);
+  --type-dragon: rgb(111, 53, 252);
+  --type-normal: rgb(170, 170, 153);
 }

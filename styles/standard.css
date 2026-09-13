@@ -2,8 +2,44 @@
     margin: 0;
     box-sizing: border-box;
     scroll-behavior: smooth;
+    font-family: PressStart2P-Regular, Helvetica, sans-serif;
 }
 
 a {
     text-decoration: none;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: #feca1b;
+}
+
+header, footer {
+    background-color: var(--secondary-background-color);
+    display: flex;
+    justify-content: space-between;
+}
+
+.max-content-width {
+    display: flex;
+    width: 1440px;
+    margin: 20px auto;
+}
+
+header > div, footer > div {
+    justify-content: space-between;
+}
+
+main {
+    flex: 1;
+}
+
+h1 {
+    font-family:  Helvetica, sans-serif;
 }
