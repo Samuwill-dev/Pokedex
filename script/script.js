@@ -5,8 +5,11 @@ let loadedPokemon = {
     'pokemonImg' : []
 }
 
-async function fetchData(id) {
-    let response = await fetch('https://pokeapi.co/api/v2/pokemon?limit=20&offset=0')
+let limit = 20
+let offset = 0
+
+async function fetchData(limit, offset) {
+    let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
     let apidata = await response.json();
     console.log(apidata);
     
@@ -40,8 +43,10 @@ async function loadData(name) {
     document.getElementById("card-section").innerHTML += getcard(pokemonId, pokemonName, pokemonTypes, pokemonImg)
 }
 
+// limit und offset versetzen
 function loadMorePokemon() {
-    
+    offset = offset + limit
+    fetchData(limit, offset)
 }
 
 
