@@ -26,7 +26,7 @@ async function loadData(name) {
     let apidata = await response.json();
 
     let pokemonId = apidata.id
-    let pokemonName = apidata.name
+    let pokemonName = apidata.name.toUpperCase()
     let pokemonTypes = apidata.types.map(typeInfo => typeInfo.type.name)
     let pokemonImg = apidata.sprites.other.home.front_default
 

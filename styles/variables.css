@@ -44,4 +44,14 @@
   --type-dark: rgb(112, 87, 70);
   --type-dragon: rgb(111, 53, 252);
   --type-normal: rgb(170, 170, 153);
+  --type-ice: rgb(150, 217, 214);
+  --type-fighting: rgb(194, 46, 40);
+  --type-poison: rgb(163, 62, 161);
+  --type-ground: rgb(226, 191, 101);
+  --type-flying: rgb(169, 143, 243);
+  --type-bug: rgb(166, 185, 26);
+  --type-rock: rgb(182, 161, 54);
+  --type-ghost: rgb(115, 87, 151);
+  --type-steel: rgb(183, 183, 206);
+  --type-fairy: rgb(214, 133, 173);
 }
