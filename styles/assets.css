@@ -1,1 +1,17 @@
 /* hier kommen z.b. Buttons styls rein, die man immer wieder braucht */
+
+.load-more-btn {
+    
+    display: flex;
+    align-items: center;
+    margin: 10px auto 20px auto;
+    padding: 15px 30px;
+    cursor: pointer;
+    background-color: var(--accent-color);
+    border: var(--border);
+    border-radius: var(--border-radius);
+}
+
+.load-more-btn:hover {
+    background-color: var(--accent-color-hover);
+}

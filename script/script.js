@@ -40,4 +40,8 @@ async function loadData(name) {
     document.getElementById("card-section").innerHTML += getcard(pokemonId, pokemonName, pokemonTypes, pokemonImg)
 }
 
+function loadMorePokemon() {
+    
+}
+
 

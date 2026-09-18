@@ -24,7 +24,12 @@
     border: var(--border);
     border-radius: var(--border-radius);
     background-color: var(--primary-background-color);
-    
+    cursor: pointer;
+}
+
+.card:hover {
+    box-shadow: 0px 0px 8px 5px var(--accent-color);
+   
 }
 
 .header {

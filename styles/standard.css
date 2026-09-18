@@ -39,6 +39,7 @@ header > div, footer > div {
 
 main {
     flex: 1;
+    width: 100%;
 }
 
 
