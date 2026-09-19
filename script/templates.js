@@ -37,7 +37,7 @@ function getDialog(dialogPokemon) {
 
         </div>
 
-        <div>
+        <div class="switch-buttons">
             <button class="next-before-button ${dialogPokemon.id === 1 ? 'hidden-button' : ''}" onclick="nextPokemon(${dialogPokemon.id}, -1)">←</button>
             <button class="next-before-button" onclick="nextPokemon(${dialogPokemon.id}, 1)">→</button>
         </div>

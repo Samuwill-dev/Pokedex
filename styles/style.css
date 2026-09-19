@@ -103,7 +103,7 @@
     display: flex;
     width: 100%;
     justify-content: space-between;
-    
+
 }
 
 .type-div {
@@ -134,6 +134,8 @@
 .info-section {
     
     background-color: brown;
+    width: 100%;
+    
 }
 
 
@@ -146,7 +148,8 @@
     cursor: pointer;
 }
 
-/* blendet den zurück-button bei id 1 aus, der platz bleibt erhalten */
-.hidden-button {
-    visibility: hidden;
+.switch-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
 }

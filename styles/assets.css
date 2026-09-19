@@ -1,7 +1,6 @@
 /* hier kommen z.b. Buttons styls rein, die man immer wieder braucht */
 
 .load-more-btn {
-    
     display: flex;
     align-items: center;
     margin: 10px auto 20px auto;
@@ -14,4 +13,18 @@
 
 .load-more-btn:hover {
     background-color: var(--accent-color-hover);
+}
+
+
+
+
+.next-before-button {
+    display: flex;
+    margin: 0 20px;
+    padding: 10px 10px;
+}
+
+/* blendet den zurück-button bei id 1 aus, der platz bleibt erhalten */
+.hidden-button {
+    visibility: hidden;
 }
