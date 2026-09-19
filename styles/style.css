@@ -101,6 +101,9 @@
 
 .type-img {
     display: flex;
+    width: 100%;
+    justify-content: space-between;
+    
 }
 
 .type-div {
@@ -141,4 +144,9 @@
 
 .close-x {
     cursor: pointer;
+}
+
+/* blendet den zurück-button bei id 1 aus, der platz bleibt erhalten */
+.hidden-button {
+    visibility: hidden;
 }

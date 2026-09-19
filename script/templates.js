@@ -3,7 +3,7 @@ function getcard(id, name, type, img) {
     let mainType = type[0]
 
     return `
-    <div class="card" data-id="card" onclick="openDialog(${id})">
+    <div class="card" onclick="openDialog(${id})">
         <h4 class="header type-${mainType}">${id} ${name}</h4>
 
         <img class="pokemon-img" src="${img}" alt="image form ${name}">
@@ -38,8 +38,8 @@ function getDialog(dialogPokemon) {
         </div>
 
         <div>
-            <button class="next-before-button">←</button>
-            <button class="next-before-button">→</button>
+            <button class="next-before-button ${dialogPokemon.id === 1 ? 'hidden-button' : ''}" onclick="nextPokemon(${dialogPokemon.id}, -1)">←</button>
+            <button class="next-before-button" onclick="nextPokemon(${dialogPokemon.id}, 1)">→</button>
         </div>
     </div>
     `

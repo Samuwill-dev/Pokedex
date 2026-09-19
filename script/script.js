@@ -7,6 +7,8 @@ let loadedPokemon = {
 
 let limit = 20
 let offset = 0
+// gesamtanzahl aller pokemon in der api
+let totalCount = 0
 
 // alle geladenen pokemon mit der id als key, für das dialog fenster
 let pokemonCache = {}
@@ -14,8 +16,8 @@ let pokemonCache = {}
 async function fetchData(limit, offset) {
     let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
     let apidata = await response.json();
-    
-    
+    totalCount = apidata.count
+
     //name holen
     let indexFromApiData = Object.keys(apidata.results)
     
@@ -61,9 +63,9 @@ async function loadData(name) {
 }
 
 // limit und offset versetzen
-function loadMorePokemon() {
+async function loadMorePokemon() {
     offset = offset + limit
-    fetchData(limit, offset)
+    await fetchData(limit, offset)
 }
 
 
@@ -80,9 +82,30 @@ function openDialog(id) {
     document.getElementById("pokemon-dialog").showModal();
 }
 
+// öffnet das vorherige (-1) oder nächste (1) pokemon, lädt bei Bedarf nach
+// gibt es kein nächstes mehr, geht es wieder bei 1 los
+async function nextPokemon(id, step) {
+    let index = loadedPokemon.pokemonId.indexOf(id) + step
+
+    if (index >= loadedPokemon.pokemonId.length && offset + limit < totalCount) {
+        await loadMorePokemon()
+    }
+
+    let newId = loadedPokemon.pokemonId[index]
+    if (newId === undefined) {
+        newId = loadedPokemon.pokemonId[0]
+    }
+    openDialog(newId)
+}
+
 function closeDialog() {
     document.getElementById("pokemon-dialog").close();
 }
+
+
+
+
+
 
 
 
