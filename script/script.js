@@ -11,7 +11,7 @@ let offset = 0
 async function fetchData(limit, offset) {
     let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
     let apidata = await response.json();
-    console.log(apidata);
+    
     
     //name holen
     let indexFromApiData = Object.keys(apidata.results)
@@ -27,6 +27,7 @@ async function fetchData(limit, offset) {
 async function loadData(name) {
     let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
     let apidata = await response.json();
+    console.log(apidata);
 
     let pokemonId = apidata.id
     let pokemonName = apidata.name.toUpperCase()
@@ -48,5 +49,11 @@ function loadMorePokemon() {
     offset = offset + limit
     fetchData(limit, offset)
 }
+
+function openDialog(id) {
+    document.getElementById("pokemon-dialog").showModal();
+}
+
+
 
 

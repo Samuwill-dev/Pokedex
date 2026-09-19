@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,31 +13,38 @@
     <link rel="stylesheet" href="styles/font.css">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/assets.css">
-    
+
     <script src="./script/templates.js"></script>
     <script src="./script/script.js"></script>
 </head>
+
 <body onload="fetchData(limit, offset)">
     <header>
         <div class="max-content-width">
             <h1><img class="pokeball" src="./imgs/pokeball.png" alt="Pokeball"> Pokedex</h1>
-            <div class="search-input">Search <input type="text" placeholder="search a Pokemon" data-id="search-input"></div> 
+            <div class="search-input">Search <input type="text" placeholder="search a Pokemon" data-id="search-input">
+            </div>
         </div>
     </header>
 
     <main>
-       <div class="max-content-width card-section" id="card-section">
-        <!-- hier werden die karten per js eingefügt -->
+        <div class="max-content-width card-section" id="card-section">
+            <!-- hier werden die karten per js eingefügt -->
+        </div>
 
-       </div>
-       <button class="load-more-btn" onclick="loadMorePokemon()">Load More</button>
+        <dialog class="pokemon-dialog" id="pokemon-dialog">
+            <!-- hier kommen die infos des pokemons -->
+
+        </dialog>
+        <button data-id="load-more-button" class="load-more-btn" onclick="loadMorePokemon()">Load More</button>
     </main>
 
     <footer>
         <div class="max-content-width">
             <span>Copyright © 2026 Samuel W</span>
-            <a href="#">Impressum</a> 
+            <a href="#">Impressum</a>
         </div>
     </footer>
 </body>
+
 </html>
