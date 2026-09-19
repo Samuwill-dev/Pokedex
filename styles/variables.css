@@ -16,6 +16,7 @@
   --success-color: rgb(56, 168, 92);
   --danger-color: rgb(200, 40, 40);
 
+
   --border-width: 3px;
   --border: var(--border-width) solid var(--outlines);
   --border-radius: 16px;

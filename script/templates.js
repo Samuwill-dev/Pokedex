@@ -14,22 +14,34 @@ function getcard(id, name, type, img) {
     `
 }
 
-function getDialog() {
+function getDialog(dialogPokemon) {
     return `
     <div class="dialog-header">
-        <span>id</span>
-        <span>NAME</span>
-        <span>x</span>
+        <span>${dialogPokemon.id}</span>
+        <span>${dialogPokemon.name}</span>
+        <span class="close-x" onclick="closeDialog()">X</span>
     </div>
-    <div>typen</div>
-    <img src="" alt="ich bin bild">
+    
+    <div class="type-img">
+        <div id="dialog-types"></div>
+        <img class="dialog-img" src="${dialogPokemon.img}" alt="bild von ${dialogPokemon.name}">
+    </div>
+
     <div class="info-section">
         <nav class="dialog-nav">
-            <span>About</span>
-            <span>Base Stats</span>
+            <span class="nav-option">About</span>
+            <span class="nav-option">Base Stats</span>
         </nav>
+
         <div class="infos">
+
+        </div>
+
+        <div>
+            <button class="next-before-button">←</button>
+            <button class="next-before-button">→</button>
         </div>
     </div>
     `
 }
+

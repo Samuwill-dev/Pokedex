@@ -90,20 +90,55 @@
     bottom: 0;
     left: 0;
     margin: auto;
+    padding: 0;
 }
 
 .dialog-header {
     display: flex;
     justify-content: space-between;
+    padding: 20px;
 }
 
+.type-img {
+    display: flex;
+}
 
+.type-div {
+    border: var(--border);
+    border-radius: var(--border-radius);
+    margin: 50px 0 50px 20px;
+    padding: 5px 5px;
+}
+
+.dialog-types {
+    display: flex;
+    flex-direction: column;
+
+}
+
+.dialog-img {
+    width: 200px;
+    height: 200px;
+}
 
 .dialog-nav {
     display: flex;
     justify-content: space-between;
+    padding: 10px;
+    width: 100%;
 }
+
+.info-section {
+    
+    background-color: brown;
+}
+
+
 
 .pokemon-dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.618);
+}
+
+.close-x {
+    cursor: pointer;
 }
