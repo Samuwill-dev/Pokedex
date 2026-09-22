@@ -64,7 +64,7 @@ function getDialogAboutSection(dialogPokemon) {
         </tr>
         <tr>
             <td>Abilities:</td>
-            <td class="abilities">${dialogPokemon.abilities.map(ability => `<span>${ability}</span>`).join('')}</td>
+            <td><ul class="abilities">${dialogPokemon.abilities.map(ability => `<li>${ability}</li>`).join('')}</ul></td>
         </tr>
     </table>
     `

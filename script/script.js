@@ -127,3 +127,10 @@ function switchTab(tab, id) {
 function closeDialog() {
     document.getElementById("pokemon-dialog").close();
 }
+
+// schliesst den dialog, wenn direkt auf den backdrop geklickt wird (event.target ist dann der dialog selbst, nicht ein kind-element)
+function closeDialogOnBackdropClick(event) {
+    if (event.target.id === "pokemon-dialog") {
+        closeDialog()
+    }
+}
