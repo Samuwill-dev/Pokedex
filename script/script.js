@@ -86,6 +86,7 @@ function openDialog(id) {
         document.getElementById("dialog-types").innerHTML += `<div class="type-div">${dialogPokemon.types[indexOfType]}</div>`;
     }
     document.getElementById("pokemon-dialog").showModal();
+    document.body.style.overflow = "hidden";
 }
 
 
