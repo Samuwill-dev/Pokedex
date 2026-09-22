@@ -29,8 +29,8 @@ function getDialog(dialogPokemon) {
 
     <div class="info-section">
         <nav class="dialog-nav">
-            <span class="nav-option">About</span>
-            <span class="nav-option">Base Stats</span>
+            <span class="nav-option" onclick="switchTab('about', ${dialogPokemon.id})">About</span>
+            <span class="nav-option" onclick="switchTab('stats', ${dialogPokemon.id})">Base Stats</span>
         </nav>
 
         <div class="infos" id="infos">
@@ -54,7 +54,7 @@ function getDialogAboutSection(dialogPokemon) {
         </tr>
         <tr>
             <td>Height:</td>
-            <td>${dialogPokemon.height} cm</td>
+            <td>${dialogPokemon.height} m</td>
         </tr>
         <tr>
             <td>Weight:</td>
@@ -62,7 +62,46 @@ function getDialogAboutSection(dialogPokemon) {
         </tr>
         <tr>
             <td>Abilities:</td>
-            <td>${dialogPokemon.abilities}</td>
+            <td class="abilities">${dialogPokemon.abilities}</td>
+        </tr>
+    </table>
+    `
+}
+
+function getStatValue(stats, name) {
+    return stats.find(stat => stat.name === name).value
+}
+
+function getDialogBaseStatsSection(dialogPokemon) {
+    return `
+    <table>
+        <tr>
+            <td>HP:</td>
+            <td>${dialogPokemon.hp}</td>
+        </tr>
+        <tr>
+            <td>Attack:</td>
+            <td>${dialogPokemon.attack}</td>
+        </tr>
+        <tr>
+            <td>Defense:</td>
+            <td>${dialogPokemon.defense}</td>
+        </tr>
+        <tr>
+            <td>SpAtk:</td>
+            <td>${dialogPokemon.spAtk}</td>
+        </tr>
+        <tr>
+            <td>Sp.Def:</td>
+            <td>${dialogPokemon.spDef}</td>
+        </tr>
+        <tr>
+            <td>Speed:</td>
+            <td>${dialogPokemon.speed}</td>
+        </tr>
+        <tr>
+            <td>Total:</td>
+            <td>${dialogPokemon.total}</td>
         </tr>
     </table>
     `

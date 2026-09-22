@@ -7,69 +7,71 @@ let loadedPokemon = {
 
 let limit = 20
 let offset = 0
-// gesamtanzahl aller pokemon in der api
-let totalCount = 0
-
-// alle geladenen pokemon mit der id als key, für das dialog fenster
-let pokemonCache = {}
+let totalCount = 0 // gesamtanzahl aller pokemon in der api
+let pokemonCache = {} // alle geladenen pokemon mit der id als key, für das dialog fenster
 
 async function fetchData(limit, offset) {
     let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
     let apidata = await response.json();
     totalCount = apidata.count
 
-    //name holen
-    let indexFromApiData = Object.keys(apidata.results)
-
     for (let indexFromApiData = 0; indexFromApiData < apidata.results.length; indexFromApiData++) {
         let pokemonName = apidata.results[indexFromApiData].name
-
-        await loadData(pokemonName)
+        await fetchName(pokemonName)
     }
-
 }
 
-async function loadData(name) {
+async function fetchName(name) {
     let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
     let apidata = await response.json();
-    console.log(apidata);
-
-    let pokemonId = apidata.id
-    let pokemonName = apidata.name.toUpperCase()
-    let pokemonTypes = apidata.types.map(typeInfo => typeInfo.type.name)
-    let pokemonImg = apidata.sprites.other.home.front_default
-
-    // fügt daten in array ein
-    loadedPokemon.pokemonId.push(pokemonId)
-    loadedPokemon.pokemonName.push(pokemonName)
-    loadedPokemon.pokemonType.push(pokemonTypes)
-    loadedPokemon.pokemonImg.push(pokemonImg)
 
     let responseTwo = await fetch(`${apidata.species.url}`)
     let apidataSpecies = await responseTwo.json();
-    console.log("df", apidataSpecies);
+    loadData(apidata, apidataSpecies)
+}
 
-    // speichert die daten fürs dialog fenster, damit nicht nochmal gefetcht werden muss
-    pokemonCache[pokemonId] = {
-        id: pokemonId,
-        name: pokemonName,
-        types: pokemonTypes,
-        img: pokemonImg,
+function loadData(apidata, apidataSpecies) {
+    let pokemon = cachePokemon(apidata, apidataSpecies)
+    pokemonCache[pokemon.id] = pokemon
+
+    loadedPokemon.pokemonId.push(pokemon.id)
+    loadedPokemon.pokemonName.push(pokemon.name)
+    loadedPokemon.pokemonType.push(pokemon.types)
+    loadedPokemon.pokemonImg.push(pokemon.img)
+
+    document.getElementById("card-section").innerHTML += getcard(pokemon.id, pokemon.name, pokemon.types, pokemon.img)
+}
+
+
+// baut die daten fürs dialog fenster, damit nicht nochmal gefetcht werden muss
+function cachePokemon(apidata, apidataSpecies) {
+    let stats = apidata.stats.map(statInfo => ({ name: statInfo.stat.name, value: statInfo.base_stat }))
+    let hp = getStatValue(stats, "hp")
+    let attack = getStatValue(stats, "attack")
+    let defense = getStatValue(stats, "defense")
+    let spAtk = getStatValue(stats, "special-attack")
+    let spDef = getStatValue(stats, "special-defense")
+    let speed = getStatValue(stats, "speed")
+    let total = hp + attack + defense + spAtk + spDef + speed
+
+    return {
+        id: apidata.id,
+        name: apidata.name.toUpperCase(),
+        types: apidata.types.map(typeInfo => typeInfo.type.name),
+        img: apidata.sprites.other.home.front_default,
         height: (apidata.height / 10).toFixed(2),
         weight: (apidata.weight / 10),
         abilities: apidata.abilities.map(abilityInfo => abilityInfo.ability.name),
-        stats: apidata.stats.map(statInfo => ({ name: statInfo.stat.name, value: statInfo.base_stat })),
-        species: apidataSpecies.genera[4].genus
+        stats: stats,
+        hp: hp,
+        attack: attack,
+        defense: defense,
+        spAtk: spAtk,
+        spDef: spDef,
+        speed: speed,
+        total: total,
+        species: apidataSpecies.genera[4].genus,
     }
-
-    console.log(loadedPokemon);
-    document.getElementById("card-section").innerHTML += getcard(pokemonId, pokemonName, pokemonTypes, pokemonImg)
-}
-
-// limit und offset versetzen
-async function loadMorePokemon() {
-    offset = offset + limit
-    await fetchData(limit, offset)
 }
 
 
@@ -78,17 +80,21 @@ function openDialog(id) {
 
     document.getElementById("pokemon-dialog").innerHTML = "";
     document.getElementById("pokemon-dialog").innerHTML = getDialog(dialogPokemon);
-    document.getElementById("infos").innerHTML = getDialogAboutSection(dialogPokemon);
+    switchTab("about", id);
 
     for (let indexOfType = 0; indexOfType < dialogPokemon.types.length; indexOfType++) {
         document.getElementById("dialog-types").innerHTML += `<div class="type-div">${dialogPokemon.types[indexOfType]}</div>`;
     }
-
     document.getElementById("pokemon-dialog").showModal();
 }
 
-// öffnet das vorherige (-1) oder nächste (1) pokemon, lädt bei Bedarf nach
-// gibt es kein nächstes mehr, geht es wieder bei 1 los
+
+async function loadMorePokemon() {
+    offset = offset + limit
+    await fetchData(limit, offset)
+}
+
+
 async function nextPokemon(id, step) {
     let index = loadedPokemon.pokemonId.indexOf(id) + step
 
@@ -102,6 +108,21 @@ async function nextPokemon(id, step) {
     }
     openDialog(newId)
 }
+
+function switchTab(tab, id) {
+    let dialogPokemon = pokemonCache[id]
+
+    switch (tab) {
+        case "about": // wenn about angefragt wird
+            document.getElementById("infos").innerHTML = getDialogAboutSection(dialogPokemon)
+            break
+
+        case "stats": // wenn stats angefragt wird
+            document.getElementById("infos").innerHTML = getDialogBaseStatsSection(dialogPokemon)
+            break
+    }
+}
+
 
 function closeDialog() {
     document.getElementById("pokemon-dialog").close();

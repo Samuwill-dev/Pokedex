@@ -83,7 +83,7 @@
     background-color: rgb(255, 254, 254);
     border-radius: var(--border-radius);
     width: 500px;
-    height: 750px;
+    height: 650px;
     position: fixed;
     top: 0;
     right: 0;
@@ -126,7 +126,7 @@
 
 .dialog-nav {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     padding: 10px;
     width: 100%;
 }
@@ -152,4 +152,9 @@
     display: flex;
     justify-content: space-between;
     padding: 20px 0;
+}
+
+.abilities {
+    display: flex;
+    flex-wrap: wrap;
 }
