@@ -15,6 +15,8 @@ function getcard(id, name, type, img) {
 }
 
 function getDialog(dialogPokemon) {
+    let mainType = dialogPokemon.types[0]
+
     return `
     <div class="dialog-header">
         <span>${dialogPokemon.id}</span>
@@ -27,7 +29,7 @@ function getDialog(dialogPokemon) {
         <img class="dialog-img" src="${dialogPokemon.img}" alt="bild von ${dialogPokemon.name}">
     </div>
 
-    <div class="info-section">
+    <div class="info-section type-${mainType}">
         <nav class="dialog-nav">
             <span class="nav-option" onclick="switchTab('about', ${dialogPokemon.id})">About</span>
             <span class="nav-option" onclick="switchTab('stats', ${dialogPokemon.id})">Base Stats</span>
@@ -62,7 +64,7 @@ function getDialogAboutSection(dialogPokemon) {
         </tr>
         <tr>
             <td>Abilities:</td>
-            <td class="abilities">${dialogPokemon.abilities}</td>
+            <td class="abilities">${dialogPokemon.abilities.map(ability => `<span>${ability}</span>`).join('')}</td>
         </tr>
     </table>
     `

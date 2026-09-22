@@ -83,7 +83,7 @@
     background-color: rgb(255, 254, 254);
     border-radius: var(--border-radius);
     width: 500px;
-    height: 650px;
+    height: 750px;
     position: fixed;
     top: 0;
     right: 0;
@@ -91,6 +91,8 @@
     left: 0;
     margin: auto;
     padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
 .dialog-header {
@@ -127,15 +129,24 @@
 .dialog-nav {
     display: flex;
     justify-content: space-around;
-    padding: 10px;
     width: 100%;
+}
+
+.nav-option {
+    padding: 15px 0;    
 }
 
 .info-section {
     
-    background-color: brown;
     width: 100%;
-    
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.infos {
+    flex: 1;
+    padding: 0 20px;
 }
 
 
@@ -157,4 +168,8 @@
 .abilities {
     display: flex;
     flex-wrap: wrap;
+}
+
+.abilities span:not(:last-child)::after {
+    content: ", ";
 }
