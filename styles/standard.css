@@ -42,7 +42,9 @@ main {
     width: 100%;
 }
 
-
+td {
+   padding: 10px 0 10px 10px;
+}
 
 input {
     padding: 6px 0 4px 8px;

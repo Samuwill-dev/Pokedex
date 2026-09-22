@@ -20,13 +20,13 @@ async function fetchData(limit, offset) {
 
     //name holen
     let indexFromApiData = Object.keys(apidata.results)
-    
+
     for (let indexFromApiData = 0; indexFromApiData < apidata.results.length; indexFromApiData++) {
         let pokemonName = apidata.results[indexFromApiData].name
 
         await loadData(pokemonName)
     }
-    
+
 }
 
 async function loadData(name) {
@@ -45,17 +45,21 @@ async function loadData(name) {
     loadedPokemon.pokemonType.push(pokemonTypes)
     loadedPokemon.pokemonImg.push(pokemonImg)
 
+    let responseTwo = await fetch(`${apidata.species.url}`)
+    let apidataSpecies = await responseTwo.json();
+    console.log("df", apidataSpecies);
+
     // speichert die daten fürs dialog fenster, damit nicht nochmal gefetcht werden muss
     pokemonCache[pokemonId] = {
         id: pokemonId,
         name: pokemonName,
         types: pokemonTypes,
         img: pokemonImg,
-        height: apidata.height,
-        weight: apidata.weight,
+        height: (apidata.height / 10).toFixed(2),
+        weight: (apidata.weight / 10),
         abilities: apidata.abilities.map(abilityInfo => abilityInfo.ability.name),
         stats: apidata.stats.map(statInfo => ({ name: statInfo.stat.name, value: statInfo.base_stat })),
-        speciesUrl: apidata.species.url
+        species: apidataSpecies.genera[4].genus
     }
 
     console.log(loadedPokemon);
@@ -74,11 +78,12 @@ function openDialog(id) {
 
     document.getElementById("pokemon-dialog").innerHTML = "";
     document.getElementById("pokemon-dialog").innerHTML = getDialog(dialogPokemon);
-    
+    document.getElementById("infos").innerHTML = getDialogAboutSection(dialogPokemon);
+
     for (let indexOfType = 0; indexOfType < dialogPokemon.types.length; indexOfType++) {
         document.getElementById("dialog-types").innerHTML += `<div class="type-div">${dialogPokemon.types[indexOfType]}</div>`;
     }
-    
+
     document.getElementById("pokemon-dialog").showModal();
 }
 
@@ -101,12 +106,3 @@ async function nextPokemon(id, step) {
 function closeDialog() {
     document.getElementById("pokemon-dialog").close();
 }
-
-
-
-
-
-
-
-
-

@@ -10,7 +10,7 @@ function getcard(id, name, type, img) {
         <div class="type type-${mainType}">
             ${type.join('   ')}
         </div>
-    </div> 
+    </div>
     `
 }
 
@@ -21,7 +21,7 @@ function getDialog(dialogPokemon) {
         <span>${dialogPokemon.name}</span>
         <span class="close-x" onclick="closeDialog()">X</span>
     </div>
-    
+
     <div class="type-img">
         <div id="dialog-types"></div>
         <img class="dialog-img" src="${dialogPokemon.img}" alt="bild von ${dialogPokemon.name}">
@@ -33,7 +33,7 @@ function getDialog(dialogPokemon) {
             <span class="nav-option">Base Stats</span>
         </nav>
 
-        <div class="infos">
+        <div class="infos" id="infos">
 
         </div>
 
@@ -45,3 +45,25 @@ function getDialog(dialogPokemon) {
     `
 }
 
+function getDialogAboutSection(dialogPokemon) {
+    return `
+    <table>
+        <tr>
+            <td>Species:</td>
+            <td>${dialogPokemon.species}</td>
+        </tr>
+        <tr>
+            <td>Height:</td>
+            <td>${dialogPokemon.height} cm</td>
+        </tr>
+        <tr>
+            <td>Weight:</td>
+            <td>${dialogPokemon.weight} kg</td>
+        </tr>
+        <tr>
+            <td>Abilities:</td>
+            <td>${dialogPokemon.abilities}</td>
+        </tr>
+    </table>
+    `
+}

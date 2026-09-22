@@ -82,8 +82,8 @@
 .pokemon-dialog {
     background-color: rgb(255, 254, 254);
     border-radius: var(--border-radius);
-    width: 350px;
-    height: 600px;
+    width: 500px;
+    height: 750px;
     position: fixed;
     top: 0;
     right: 0;
@@ -147,7 +147,7 @@
 .close-x {
     cursor: pointer;
 }
-
+ 
 .switch-buttons {
     display: flex;
     justify-content: space-between;
