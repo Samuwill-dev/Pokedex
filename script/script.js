@@ -22,15 +22,23 @@ async function fetchData(limit, offset) {
 }
 
 async function fetchName(name) {
+    let pokemon = await fetchAndCacheByName(name)
+    document.getElementById("card-section").innerHTML += getcard(pokemon.id, pokemon.name, pokemon.types, pokemon.img)
+}
+
+// laedt und cached ein pokemon per name, ohne es zu rendern (fuer die suche)
+async function fetchAndCacheByName(name) {
+    let bekanntesPokemon = Object.values(pokemonCache).find(pokemon => pokemon.name.toLowerCase() === name.toLowerCase())
+    if (bekanntesPokemon) {
+        return bekanntesPokemon
+    }
+
     let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
     let apidata = await response.json();
 
     let responseTwo = await fetch(`${apidata.species.url}`)
     let apidataSpecies = await responseTwo.json();
-    loadData(apidata, apidataSpecies)
-}
 
-function loadData(apidata, apidataSpecies) {
     let pokemon = cachePokemon(apidata, apidataSpecies)
     pokemonCache[pokemon.id] = pokemon
 
@@ -39,7 +47,7 @@ function loadData(apidata, apidataSpecies) {
     loadedPokemon.pokemonType.push(pokemon.types)
     loadedPokemon.pokemonImg.push(pokemon.img)
 
-    document.getElementById("card-section").innerHTML += getcard(pokemon.id, pokemon.name, pokemon.types, pokemon.img)
+    return pokemon
 }
 
 
