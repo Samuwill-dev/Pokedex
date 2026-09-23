@@ -19,9 +19,9 @@ function getDialog(dialogPokemon) {
 
     return `
     <div class="dialog-header">
-        <span>${dialogPokemon.id}</span>
-        <span>${dialogPokemon.name}</span>
-        <span class="close-x" onclick="closeDialog()">X</span>
+        <h2>${dialogPokemon.id}</h2>
+        <h2>${dialogPokemon.name}</h2>
+        <h2 class="close-x" onclick="closeDialog()">X</h2>
     </div>
 
     <div class="type-img">
@@ -31,8 +31,8 @@ function getDialog(dialogPokemon) {
 
     <div class="info-section type-${mainType}">
         <nav class="dialog-nav">
-            <span class="nav-option" onclick="switchTab('about', ${dialogPokemon.id})">About</span>
-            <span class="nav-option" onclick="switchTab('stats', ${dialogPokemon.id})">Base Stats</span>
+            <h3 id="about" class="nav-option" onclick="switchTab('about', ${dialogPokemon.id})">About</h3>
+            <h3 id="base-stats" class="nav-option" onclick="switchTab('stats', ${dialogPokemon.id})">Base Stats</h3>
         </nav>
 
         <div class="infos" id="infos">

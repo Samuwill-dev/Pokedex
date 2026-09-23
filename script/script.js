@@ -113,13 +113,18 @@ async function nextPokemon(id, step) {
 function switchTab(tab, id) {
     let dialogPokemon = pokemonCache[id]
 
+    document.getElementById("about").classList.remove("is-clicked")
+    document.getElementById("base-stats").classList.remove("is-clicked")
+
     switch (tab) {
         case "about": // wenn about angefragt wird
             document.getElementById("infos").innerHTML = getDialogAboutSection(dialogPokemon)
+            document.getElementById("about").classList.add("is-clicked")
             break
 
         case "stats": // wenn stats angefragt wird
             document.getElementById("infos").innerHTML = getDialogBaseStatsSection(dialogPokemon)
+            document.getElementById("base-stats").classList.add("is-clicked")
             break
     }
 }

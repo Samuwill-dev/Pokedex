@@ -7,7 +7,7 @@
   --text-color: rgb(30, 30, 35);
   --text-color-inverse: rgb(255, 255, 255);
   --outlines: rgb(20, 20, 25);
-  
+  --used: rgba(0, 0, 0, 0.378);
 
   /* Zusätzlich */
   --highlight-color: rgb(255, 203, 5);              /* Pikachu-Gelb */
