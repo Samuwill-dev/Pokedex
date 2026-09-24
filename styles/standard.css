@@ -7,6 +7,7 @@
 
 a {
     text-decoration: none;
+    color: var(--highlight-color);
 }
 
 html, body {
@@ -17,7 +18,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    color: #feca1b;
+    color: var(--highlight-color);
     background-color: rgb(166, 166, 166);
 }
 
