@@ -29,7 +29,9 @@ header, footer {
 
 .max-content-width {
     display: flex;
-    width: 1440px;
+    width: 100%;
+    max-width: 1440px;
+    padding: 0 16px;
     margin: 20px auto;
 }
 
@@ -58,5 +60,33 @@ table {
 input {
     padding: 6px 0 4px 8px;
     cursor: pointer;
+    max-width: 100%;
+}
+
+@media (max-width: 600px) {
+    header > div, footer > div {
+        flex-direction: column;
+        align-items: center;
+        gap: 12px;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 1.4rem;
+    }
+
+    footer span, footer a {
+        font-size: 0.7rem;
+    }
+
+    td {
+        padding: 8px 8px 8px 0;
+        font-size: 0.75rem;
+    }
+
+    table {
+        margin: 5px;
+        width: calc(100% - 10px);
+    }
 }
 

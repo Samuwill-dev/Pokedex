@@ -94,7 +94,10 @@
     border-radius: var(--border-radius);
     border: solid 5px;
     width: 480px;
+    max-width: calc(100% - 16px);
     height: 800px;
+    max-height: calc(100dvh - 16px);
+    overflow-y: auto;
     position: fixed;
     top: 0;
     right: 0;
@@ -195,4 +198,69 @@
 .abilities {
     margin: 0;
     padding: 20px;
+}
+
+@media (max-width: 480px) {
+    .pokemon-dialog {
+        border-width: 3px;
+        width: 100%;
+        max-width: 100%;
+        height: 600px;
+    }
+
+    .dialog-header {
+        padding: 12px;
+        gap: 8px;
+    }
+
+    .dialog-header h2 {
+        font-size: 0.9rem;
+        overflow-wrap: anywhere;
+    }
+
+    .type-img {
+        height: 160px;
+        align-items: center;
+    }
+
+    .type-div {
+        margin: 0 0 0 10px;
+        font-size: 0.6rem;
+        
+    }
+
+    .dialog-img {
+        width: 140px;
+        height: 140px;
+    }
+
+    .nav-option {
+        padding: 10px;
+        font-size: 0.75rem;
+    }
+
+    .infos {
+        margin: 0 8px;
+    }
+
+    .abilities {
+        padding: 0 0 0 16px;
+    }
+
+    .switch-buttons {
+        margin: 10px 0;
+    }
+}
+
+@media (max-width: 360px) {
+    .card {
+        width: 100%;
+        max-width: 220px;
+    }
+
+    .header {
+        font-size: 0.75rem;
+        padding: 15px 4px 5px;
+        text-align: center;
+    }
 }

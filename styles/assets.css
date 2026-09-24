@@ -9,6 +9,8 @@
 
 .loading-screen img {
     width: 800px;
+    max-width: 100%;
+    height: auto;
 }
 
 .loading-screen.hidden {
@@ -45,4 +47,16 @@
 /* blendet den zurück-button bei id 1 aus, der platz bleibt erhalten */
 .hidden-button {
     visibility: hidden;
+}
+
+@media (max-width: 400px) {
+    .load-more-btn {
+        padding: 12px 20px;
+        font-size: 0.75rem;
+    }
+
+    .next-before-button {
+        margin: 0 8px;
+        padding: 12px 20px;
+    }
 }
