@@ -222,6 +222,36 @@ header h1 {
     padding: 20px;
 }
 
+.Impressum {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+}
+
+.Impressum h1,
+.Impressum h2,
+.Impressum p,
+.Impressum a {
+    font-family: inherit;
+    color: black;
+    padding: 30px 0;
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 2rem;
+    font-weight: bold;
+    text-decoration: none;
+    color: inherit;
+}
+
 @media (max-width: 480px) {
     .pokemon-dialog {
         width: 100%;
