@@ -19,17 +19,17 @@
 
 .search-button {
     padding: 5px 20px;
-    cursor: pointer;
-    color: white;
-    background-color: red;
     border: 1px solid red;
     border-left: none;
     border-radius: 0 var(--border-radius) var(--border-radius) 0;
+    background-color: red;
+    color: white;
+    cursor: pointer;
 }
 
 .search-button:hover {
-    background-color: darkred;
     border-color: darkred;
+    background-color: darkred;
 }
 
 .load-more-btn {
@@ -37,10 +37,10 @@
     align-items: center;
     margin: 10px auto 20px auto;
     padding: 15px 30px;
-    cursor: pointer;
-    background-color: var(--accent-color);
     border: var(--border);
     border-radius: var(--border-radius);
+    background-color: var(--accent-color);
+    cursor: pointer;
 }
 
 .load-more-btn:hover:not(:disabled) {
@@ -54,11 +54,11 @@
 
 .next-before-button {
     display: flex;
-    cursor: pointer;
     margin: 0 15px;
     padding: 20px 30px;
     border-radius: var(--border-radius);
     background-color: var(bu);
+    cursor: pointer;
 }
 
 .hidden-button {

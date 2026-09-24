@@ -1,6 +1,6 @@
 .pokeball {
-    height: 40px;
     width: 40px;
+    height: 40px;
 }
 
 header h1 {
@@ -43,14 +43,13 @@ header h1 {
     justify-content: center;
 }
 
-
 .card {
-    width: 220px;
-    height: 220px;
-    margin: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 220px;
+    height: 220px;
+    margin: 10px;
     border: var(--border);
     border-radius: var(--border-radius);
     background-color: var(--primary-background-color);
@@ -59,23 +58,21 @@ header h1 {
 
 .card:hover {
     box-shadow: 0px 0px 8px 5px var(--accent-color);
-   
 }
 
 .header {
     display: flex;
     justify-content: center;
-    padding: 20px 0 5px 0;
-    border-radius: 14px 14px 0 0;
     width: 100%;
     height: 100%;
+    padding: 20px 0 5px 0;
+    border-radius: 14px 14px 0 0;
     color: var(--text-color);
-    
 }
 
 .warning {
-    color: red;
     margin-top: 5px;
+    color: red;
 }
 
 .hidden,
@@ -85,18 +82,16 @@ header h1 {
 
 .pokemon-img {
     width: 100px;
-   
 }
 
 .type {
     display: flex;
     justify-content: center;
-    padding: 20px 0 5px 0;
-    border-radius: 0 0 14px 14px;
     width: 100%;
     height: 100%;
+    padding: 20px 0 5px 0;
+    border-radius: 0 0 14px 14px;
     color: var(--text-color);
-
 }
 
 .type-fire { background-color: var(--type-fire); }
@@ -118,24 +113,22 @@ header h1 {
 .type-steel { background-color: var(--type-steel); }
 .type-fairy { background-color: var(--type-fairy); }
 
-
 .pokemon-dialog {
-    background-color: rgb(255, 254, 254);
-    border-radius: var(--border-radius);
-    border: solid 5px;
-    width: 480px;
-    max-width: calc(100% - 16px);
-    height: 810px;
-    
-    overflow-y: auto;
+    flex-direction: column;
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
+    width: 480px;
+    max-width: calc(100% - 16px);
+    height: 810px;
     margin: auto;
     padding: 0;
-    flex-direction: column;
+    border: solid 5px;
+    border-radius: var(--border-radius);
+    background-color: rgb(255, 254, 254);
+    overflow-y: auto;
 }
 
 .pokemon-dialog[open] {
@@ -156,24 +149,22 @@ header h1 {
 
 .type-img {
     display: flex;
+    justify-content: space-around;
     width: 100%;
     height: 220px;
-    justify-content: space-around;
-
 }
 
 .type-div {
+    margin: 50px 0 50px 20px;
+    padding: 5px 5px;
     border: var(--border);
     border-radius: var(--border-radius);
-    margin: 50px 0 50px 20px;
     text-align: center;
-    padding: 5px 5px;
 }
 
 .dialog-types {
     display: flex;
     flex-direction: column;
-
 }
 
 .dialog-img {
@@ -184,15 +175,14 @@ header h1 {
 .dialog-nav {
     display: flex;
     justify-content: space-around;
-    margin-top: 15px;
     width: 100%;
+    margin-top: 15px;
 }
 
 .nav-option {
-    padding: 15px 15px; 
+    padding: 15px 15px;
     border-radius: 8px 8px 0 0;
-    cursor: pointer;   
-    
+    cursor: pointer;
 }
 
 .is-clicked {
@@ -200,21 +190,18 @@ header h1 {
 }
 
 .info-section {
-    
-    width: 100%;
-    flex: 1;
     display: flex;
     flex-direction: column;
+    flex: 1;
+    width: 100%;
 }
 
 .infos {
     flex: 1;
     margin: 0 15px;
-    background-color: var(--used);
     border-radius: var(--border-radius);
+    background-color: var(--used);
 }
-
-
 
 .pokemon-dialog::backdrop {
     background-color: var(--used);
@@ -223,12 +210,11 @@ header h1 {
 .close-x {
     cursor: pointer;
 }
- 
+
 .switch-buttons {
     display: flex;
     justify-content: space-between;
     margin: 15px 0;
-    
 }
 
 .abilities {
@@ -238,15 +224,15 @@ header h1 {
 
 @media (max-width: 480px) {
     .pokemon-dialog {
-        border-width: 3px;
         width: 100%;
         max-width: 100%;
         height: 600px;
+        border-width: 3px;
     }
 
     .dialog-header {
-        padding: 12px;
         gap: 8px;
+        padding: 12px;
     }
 
     .dialog-header h2 {
@@ -255,14 +241,13 @@ header h1 {
     }
 
     .type-img {
-        height: 160px;
         align-items: center;
+        height: 160px;
     }
 
     .type-div {
         margin: 0 0 0 10px;
         font-size: 0.6rem;
-        
     }
 
     .dialog-img {
@@ -295,8 +280,8 @@ header h1 {
     }
 
     .header {
-        font-size: 0.75rem;
         padding: 15px 4px 5px;
+        font-size: 0.75rem;
         text-align: center;
     }
 }

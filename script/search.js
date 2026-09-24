@@ -1,4 +1,4 @@
-// leeres suchfeld zeigt wieder die normale liste, enter startet die suche wie der button
+// show the list, if search 0
 document.getElementById("search-input").addEventListener("input", (event) => {
     if (event.target.value.trim() === "") resetSearch()
 });
@@ -6,9 +6,9 @@ document.getElementById("search-input").addEventListener("keydown", (event) => {
     if (event.key === "Enter") search(event.target.value)
 });
 
-let allPokemonNames = [] // namen aller pokemon aus der api (fuer die suche, nicht nur die geladenen)
-let searchRunId = 0 // um veraltete, langsame suchen zu verwerfen
-let isSearching = false // verhindert, dass das normale laden waehrend der suche karten anhaengt
+let allPokemonNames = [] 
+let searchRunId = 0 
+let isSearching = false /
 
 function search(value) {
     let smallValue = value.trim().toLowerCase()
@@ -22,7 +22,7 @@ function search(value) {
     }
 }
 
-// laedt (einmalig) alle pokemon namen aus der api und filtert danach lokal
+// load all pokemon
 async function searchPokemon(smallValue) {
     let runId = ++searchRunId
     isSearching = true
@@ -30,7 +30,7 @@ async function searchPokemon(smallValue) {
     if (allPokemonNames.length === 0) {
         await fetchAllPokemonNames()
     }
-    if (searchRunId !== runId) return // es wurde waehrend dem laden neu gesucht
+    if (searchRunId !== runId) return 
 
     let matchingNames = allPokemonNames.filter(name => name.includes(smallValue))
     prepareSearchResults(matchingNames.length)
@@ -47,20 +47,20 @@ function prepareSearchResults(resultCount) {
 async function renderSearchResults(matchingNames, runId) {
     for (let index = 0; index < matchingNames.length; index++) {
         let pokemon = await fetchAndCacheByName(matchingNames[index])
-        if (searchRunId !== runId) return // es wurde waehrend dem laden neu gesucht
+        if (searchRunId !== runId) return 
 
         searchResultIds.push(pokemon.id)
         renderCards([pokemon])
     }
 }
 
-// laedt einmalig die namen aller pokemon aus der api (ohne die vollen daten)
+
 async function fetchAllPokemonNames() {
     let apidata = await fetchJson(`https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0`)
     allPokemonNames = apidata.results.map(pokemon => pokemon.name)
 }
 
-// zeigt wieder die normal geladenen pokemon
+// show normal pokemon
 function resetSearch() {
     searchRunId++
     isSearching = false

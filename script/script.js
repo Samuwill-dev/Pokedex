@@ -1,9 +1,9 @@
 let limit = 20
 let offset = 0
-let totalCount = 0 // gesamtanzahl aller pokemon in der api
-let pokemonCache = {} // alle geladenen pokemon mit der id als key, für das dialog fenster
-let loadedPokemonIds = [] // ids der normal geladenen pokemon in der richtigen reihenfolge
-let searchResultIds = [] // ids der pokemon, die zur aktuellen suche passen
+let totalCount = 0 
+let pokemonCache = {} 
+let loadedPokemonIds = [] 
+let searchResultIds = [] 
 
 async function fetchData(limit, offset) {
     showLoadingScreen()
@@ -24,7 +24,7 @@ async function fetchJson(url) {
     return await response.json()
 }
 
-// laedt und cached ein pokemon per name, ohne es zu rendern (fuer die suche)
+// load and cache pokemon
 async function fetchAndCacheByName(name) {
     let knownPokemon = Object.values(pokemonCache).find(pokemon => pokemon.name.toLowerCase() === name.toLowerCase())
     if (knownPokemon) {
@@ -53,7 +53,7 @@ function hideLoadingScreen() {
 }
 
 
-// baut die daten fürs dialog fenster, damit nicht nochmal gefetcht werden muss
+// data for dialog
 function cachePokemon(apidata) {
     let stats = getStats(apidata)
     return {
@@ -81,7 +81,7 @@ function getStats(apidata) {
     return { hp, attack, defense, spAtk, spDef, speed, total }
 }
 
-// species wird erst beim oeffnen des dialogs geladen (lazy loading) und danach gecached
+// load species at cklick on it
 async function loadSpecies(pokemon) {
     if (pokemon.species) {
         return
@@ -105,7 +105,7 @@ async function openDialog(id) {
     document.body.style.overflow = "hidden"
 }
 
-// ids der pokemon, zwischen denen im dialog gewechselt wird (suchtreffer oder normale liste)
+
 function getShownIds() {
     return isSearching ? searchResultIds : loadedPokemonIds
 }
@@ -145,7 +145,7 @@ function closeDialog() {
     document.getElementById("pokemon-dialog").close();
 }
 
-// schliesst den dialog, wenn direkt auf den backdrop geklickt wird (event.target ist dann der dialog selbst, nicht ein kind-element)
+
 function closeDialogOnBackdropClick(event) {
     if (event.target.id === "pokemon-dialog") {
         closeDialog()
