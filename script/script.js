@@ -23,7 +23,9 @@ async function fetchData(limit, offset) {
 
 async function fetchName(name) {
     let pokemon = await fetchAndCacheByName(name)
-    document.getElementById("card-section").innerHTML += getcard(pokemon.id, pokemon.name, pokemon.types, pokemon.img)
+    if (!isSearching) {
+        document.getElementById("card-section").innerHTML += getcard(pokemon.id, pokemon.name, pokemon.types, pokemon.img)
+    }
 }
 
 // laedt und cached ein pokemon per name, ohne es zu rendern (fuer die suche)

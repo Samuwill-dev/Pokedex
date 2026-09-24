@@ -13,17 +13,16 @@
     <link rel="stylesheet" href="styles/font.css">
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/assets.css">
-
-    <script src="./script/templates.js"></script>
-    <script src="./script/script.js"></script>
-    <script src="script/search.js"></script>
 </head>
 
-<body onload="fetchData()">
+<body onload="fetchData(limit, offset)">
     <header>
         <div class="max-content-width">
             <h1><img class="pokeball" src="./imgs/pokeball.png" alt="Pokeball"> Pokedex</h1>
-            <div class="search-input">Search <input type="text" placeholder="search a Pokemon" data-id="search-input">
+            <div class="search-input" value="">Search
+                <input type="text" id="search-input" placeholder="search a Pokemon" data-id="search-input">
+                <h6 class="warning hidden" id="warning">Please enter at least 3 letters!!</h6>
+                <h6 class="warning hidden" id="no-results-warning">No Pokemon found!!</h6>
             </div>
         </div>
     </header>
@@ -46,6 +45,10 @@
             <a href="#">Impressum</a>
         </div>
     </footer>
+
+    <script src="./script/templates.js"></script>
+    <script src="./script/script.js"></script>
+    <script src="script/search.js"></script>
 </body>
 
 </html>

@@ -43,8 +43,18 @@
     
 }
 
+.warning {
+    color: red;
+    margin-top: 5px;
+}
+
+.hidden,
+.load-more-btn.hidden {
+    display: none;
+}
+
 .pokemon-img {
-   width: 100px;
+    width: 100px;
    
 }
 
