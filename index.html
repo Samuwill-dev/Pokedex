@@ -19,15 +19,17 @@
     <header>
         <div class="max-content-width">
             <h1><img class="pokeball" src="./imgs/pokeball.png" alt="Pokeball"> Pokedex</h1>
-            <div class="search-input" value="">Search
-                <input type="text" id="search-input" placeholder="search a Pokemon" data-id="search-input">
-                <h6 class="warning hidden" id="warning">Please enter at least 3 letters!!</h6>
-                <h6 class="warning hidden" id="no-results-warning">No Pokemon found!!</h6>
+            <div class="search-input">
+                <div class="search-bar">
+                    <input type="text" id="search-input" placeholder="search" data-id="search-input" aria-label="Search Pokemon by name">
+                    <button class="search-button" id="search-button" data-id="search-button" aria-label="Start search" onclick="search(document.getElementById('search-input').value)">Search</button>
+                </div>
+                <h6 class="warning hidden" id="warning">Please enter at least 3 letters!</h6>
             </div>
         </div>
     </header>
 
-    <main>
+    <main data-id="content">
         <div class="loading-screen" id="loading-screen">
             <img src="./imgs/giphy.webp" alt="loading Pokemon">
         </div>
@@ -36,11 +38,11 @@
             <!-- hier werden die karten per js eingefügt -->
         </div>
 
-        <dialog class="pokemon-dialog" id="pokemon-dialog" onclick="closeDialogOnBackdropClick(event)" onclose="document.body.style.overflow = ''">
+        <dialog class="pokemon-dialog" id="pokemon-dialog" data-id="dialog" aria-label="Pokemon details" onclick="closeDialogOnBackdropClick(event)" onclose="document.body.style.overflow = ''">
             <!-- hier kommen die infos des pokemons -->
 
         </dialog>
-        <button data-id="load-more-button" class="load-more-btn" onclick="loadMorePokemon()">Load More</button>
+        <button data-id="load-more-button" class="load-more-btn" aria-label="Load more Pokemon" onclick="loadMorePokemon()">Load More</button>
     </main>
 
     <footer>

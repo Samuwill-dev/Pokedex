@@ -63,7 +63,7 @@ input {
     max-width: 100%;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 730px) {
     header > div, footer > div {
         flex-direction: column;
         align-items: center;

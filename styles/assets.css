@@ -17,6 +17,21 @@
     display: none;
 }
 
+.search-button {
+    padding: 5px 20px;
+    cursor: pointer;
+    color: white;
+    background-color: red;
+    border: 1px solid red;
+    border-left: none;
+    border-radius: 0 var(--border-radius) var(--border-radius) 0;
+}
+
+.search-button:hover {
+    background-color: darkred;
+    border-color: darkred;
+}
+
 .load-more-btn {
     display: flex;
     align-items: center;
@@ -28,12 +43,14 @@
     border-radius: var(--border-radius);
 }
 
-.load-more-btn:hover {
+.load-more-btn:hover:not(:disabled) {
     background-color: var(--accent-color-hover);
 }
 
-
-
+.load-more-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
 
 .next-before-button {
     display: flex;
@@ -44,7 +61,6 @@
     background-color: var(bu);
 }
 
-/* blendet den zurück-button bei id 1 aus, der platz bleibt erhalten */
 .hidden-button {
     visibility: hidden;
 }

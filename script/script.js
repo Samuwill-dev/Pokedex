@@ -1,81 +1,61 @@
-let loadedPokemon = {
-    'pokemonId' : [],
-    'pokemonName' : [],
-    'pokemonType' : [],
-    'pokemonImg' : []
-}
-
 let limit = 20
 let offset = 0
 let totalCount = 0 // gesamtanzahl aller pokemon in der api
 let pokemonCache = {} // alle geladenen pokemon mit der id als key, für das dialog fenster
+let loadedPokemonIds = [] // ids der normal geladenen pokemon in der richtigen reihenfolge
+let searchResultIds = [] // ids der pokemon, die zur aktuellen suche passen
 
 async function fetchData(limit, offset) {
     showLoadingScreen()
 
-    let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
-    let apidata = await response.json();
+    let apidata = await fetchJson(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
     totalCount = apidata.count
-
-    let newPokemon = []
-    for (let indexFromApiData = 0; indexFromApiData < apidata.results.length; indexFromApiData++) {
-        let pokemonName = apidata.results[indexFromApiData].name
-        newPokemon.push(await fetchAndCacheByName(pokemonName))
-    }
+    let newPokemon = await Promise.all(apidata.results.map(result => fetchAndCacheByName(result.name)))
+    loadedPokemonIds.push(...newPokemon.map(pokemon => pokemon.id))
 
     hideLoadingScreen()
-
     if (!isSearching) {
-        for (let index = 0; index < newPokemon.length; index++) {
-            document.getElementById("card-section").innerHTML += getcard(newPokemon[index].id, newPokemon[index].name, newPokemon[index].types, newPokemon[index].img)
-        }
+        renderCards(newPokemon)
     }
+}
+
+async function fetchJson(url) {
+    let response = await fetch(url)
+    return await response.json()
 }
 
 // laedt und cached ein pokemon per name, ohne es zu rendern (fuer die suche)
 async function fetchAndCacheByName(name) {
-    let bekanntesPokemon = Object.values(pokemonCache).find(pokemon => pokemon.name.toLowerCase() === name.toLowerCase())
-    if (bekanntesPokemon) {
-        return bekanntesPokemon
+    let knownPokemon = Object.values(pokemonCache).find(pokemon => pokemon.name.toLowerCase() === name.toLowerCase())
+    if (knownPokemon) {
+        return knownPokemon
     }
 
-    let response = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`)
-    let apidata = await response.json();
-
-    let responseTwo = await fetch(`${apidata.species.url}`)
-    let apidataSpecies = await responseTwo.json();
-
-    let pokemon = cachePokemon(apidata, apidataSpecies)
+    let apidata = await fetchJson(`https://pokeapi.co/api/v2/pokemon/${name}`)
+    let pokemon = cachePokemon(apidata)
     pokemonCache[pokemon.id] = pokemon
-
-    loadedPokemon.pokemonId.push(pokemon.id)
-    loadedPokemon.pokemonName.push(pokemon.name)
-    loadedPokemon.pokemonType.push(pokemon.types)
-    loadedPokemon.pokemonImg.push(pokemon.img)
-
     return pokemon
+}
+
+function renderCards(pokemonList) {
+    let cardsHtml = pokemonList.map(pokemon => getcard(pokemon.id, pokemon.name, pokemon.types, pokemon.img)).join("")
+    document.getElementById("card-section").innerHTML += cardsHtml
 }
 
 function showLoadingScreen() {
     document.getElementById("loading-screen").classList.remove("hidden")
+    document.querySelector('[data-id="load-more-button"]').disabled = true
 }
 
 function hideLoadingScreen() {
     document.getElementById("loading-screen").classList.add("hidden")
+    document.querySelector('[data-id="load-more-button"]').disabled = false
 }
 
 
 // baut die daten fürs dialog fenster, damit nicht nochmal gefetcht werden muss
-function cachePokemon(apidata, apidataSpecies) {
-    let stats = apidata.stats.map(statInfo => ({ name: statInfo.stat.name, value: statInfo.base_stat }))
-    let hp = getStatValue(stats, "hp")
-    let attack = getStatValue(stats, "attack")
-    let defense = getStatValue(stats, "defense")
-    let spAtk = getStatValue(stats, "special-attack")
-    let spDef = getStatValue(stats, "special-defense")
-    let speed = getStatValue(stats, "speed")
-    let total = hp + attack + defense + spAtk + spDef + speed
-
+function cachePokemon(apidata) {
+    let stats = getStats(apidata)
     return {
         id: apidata.id,
         name: apidata.name.toUpperCase(),
@@ -84,31 +64,50 @@ function cachePokemon(apidata, apidataSpecies) {
         height: (apidata.height / 10).toFixed(2),
         weight: (apidata.weight / 10),
         abilities: apidata.abilities.map(abilityInfo => abilityInfo.ability.name),
-        stats: stats,
-        hp: hp,
-        attack: attack,
-        defense: defense,
-        spAtk: spAtk,
-        spDef: spDef,
-        speed: speed,
-        total: total,
-        species: apidataSpecies.genera[4].genus,
+        speciesUrl: apidata.species.url,
+        ...stats
     }
 }
 
+function getStats(apidata) {
+    let stats = apidata.stats.map(statInfo => ({ name: statInfo.stat.name, value: statInfo.base_stat }))
+    let hp = getStatValue(stats, "hp")
+    let attack = getStatValue(stats, "attack")
+    let defense = getStatValue(stats, "defense")
+    let spAtk = getStatValue(stats, "special-attack")
+    let spDef = getStatValue(stats, "special-defense")
+    let speed = getStatValue(stats, "speed")
+    let total = hp + attack + defense + spAtk + spDef + speed
+    return { hp, attack, defense, spAtk, spDef, speed, total }
+}
 
-function openDialog(id) {
-    let dialogPokemon = pokemonCache[id]
-
-    document.getElementById("pokemon-dialog").innerHTML = "";
-    document.getElementById("pokemon-dialog").innerHTML = getDialog(dialogPokemon);
-    switchTab("about", id);
-
-    for (let indexOfType = 0; indexOfType < dialogPokemon.types.length; indexOfType++) {
-        document.getElementById("dialog-types").innerHTML += `<div class="type-div">${dialogPokemon.types[indexOfType]}</div>`;
+// species wird erst beim oeffnen des dialogs geladen (lazy loading) und danach gecached
+async function loadSpecies(pokemon) {
+    if (pokemon.species) {
+        return
     }
-    document.getElementById("pokemon-dialog").showModal();
-    document.body.style.overflow = "hidden";
+
+    let apidataSpecies = await fetchJson(pokemon.speciesUrl)
+    let englishGenus = apidataSpecies.genera.find(entry => entry.language.name === "en")
+    pokemon.species = englishGenus ? englishGenus.genus : "unknown"
+}
+
+
+async function openDialog(id) {
+    let dialog = document.getElementById("pokemon-dialog")
+
+    await loadSpecies(pokemonCache[id])
+    dialog.innerHTML = getDialog(pokemonCache[id], getShownIds().indexOf(id) === 0)
+    switchTab("about", id)
+    if (!dialog.open) {
+        dialog.showModal()
+    }
+    document.body.style.overflow = "hidden"
+}
+
+// ids der pokemon, zwischen denen im dialog gewechselt wird (suchtreffer oder normale liste)
+function getShownIds() {
+    return isSearching ? searchResultIds : loadedPokemonIds
 }
 
 
@@ -119,36 +118,26 @@ async function loadMorePokemon() {
 
 
 async function nextPokemon(id, step) {
-    let index = loadedPokemon.pokemonId.indexOf(id) + step
+    let index = getShownIds().indexOf(id) + step
 
-    if (index >= loadedPokemon.pokemonId.length && offset + limit < totalCount) {
+    if (index >= getShownIds().length && !isSearching && offset + limit < totalCount) {
         await loadMorePokemon()
     }
 
-    let newId = loadedPokemon.pokemonId[index]
+    let newId = getShownIds()[index]
     if (newId === undefined) {
-        newId = loadedPokemon.pokemonId[0]
+        newId = getShownIds()[0]
     }
     openDialog(newId)
 }
 
 function switchTab(tab, id) {
     let dialogPokemon = pokemonCache[id]
+    let isAbout = tab === "about"
 
-    document.getElementById("about").classList.remove("is-clicked")
-    document.getElementById("base-stats").classList.remove("is-clicked")
-
-    switch (tab) {
-        case "about": // wenn about angefragt wird
-            document.getElementById("infos").innerHTML = getDialogAboutSection(dialogPokemon)
-            document.getElementById("about").classList.add("is-clicked")
-            break
-
-        case "stats": // wenn stats angefragt wird
-            document.getElementById("infos").innerHTML = getDialogBaseStatsSection(dialogPokemon)
-            document.getElementById("base-stats").classList.add("is-clicked")
-            break
-    }
+    document.getElementById("about").classList.toggle("is-clicked", isAbout)
+    document.getElementById("base-stats").classList.toggle("is-clicked", !isAbout)
+    document.getElementById("infos").innerHTML = isAbout ? getDialogAboutSection(dialogPokemon) : getDialogBaseStatsSection(dialogPokemon)
 }
 
 
