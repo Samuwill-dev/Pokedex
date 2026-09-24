@@ -38,7 +38,7 @@ async function fetchAndCacheByName(name) {
 }
 
 function renderCards(pokemonList) {
-    let cardsHtml = pokemonList.map(pokemon => getcard(pokemon.id, pokemon.name, pokemon.types, pokemon.img)).join("")
+    let cardsHtml = pokemonList.map(pokemon => getcard(pokemon.id, pokemon.name, pokemon.types[0], pokemon.types.join("   "), pokemon.img)).join("")
     document.getElementById("card-section").innerHTML += cardsHtml
 }
 
@@ -52,7 +52,6 @@ function hideLoadingScreen() {
     document.querySelector('[data-id="load-more-button"]').disabled = false
 }
 
-
 // data for dialog
 function cachePokemon(apidata) {
     let stats = getStats(apidata)
@@ -60,13 +59,33 @@ function cachePokemon(apidata) {
         id: apidata.id,
         name: apidata.name.toUpperCase(),
         types: apidata.types.map(typeInfo => typeInfo.type.name),
-        img: apidata.sprites.other.home.front_default,
+        img: getPokemonImage(apidata.sprites),
         height: (apidata.height / 10).toFixed(2),
         weight: (apidata.weight / 10),
         abilities: apidata.abilities.map(abilityInfo => abilityInfo.ability.name),
         speciesUrl: apidata.species.url,
         ...stats
     }
+}
+
+// some forms have no home sprite, so fall back to other images
+function getPokemonImage(sprites) {
+    return sprites.other.home.front_default
+        || sprites.other["official-artwork"].front_default
+        || sprites.front_default
+        || "./imgs/pokeball.png"
+}
+
+function getStatValue(stats, name) {
+    return stats.find(stat => stat.name === name).value
+}
+
+function getTypesHtml(pokemon) {
+    return pokemon.types.map(getTypeTemplate).join("")
+}
+
+function getAbilitiesHtml(pokemon) {
+    return pokemon.abilities.map(getAbilityTemplate).join("")
 }
 
 function getStats(apidata) {
@@ -92,12 +111,11 @@ async function loadSpecies(pokemon) {
     pokemon.species = englishGenus ? englishGenus.genus : "unknown"
 }
 
-
 async function openDialog(id) {
     let dialog = document.getElementById("pokemon-dialog")
 
     await loadSpecies(pokemonCache[id])
-    dialog.innerHTML = getDialog(pokemonCache[id], getShownIds().indexOf(id) === 0)
+    dialog.innerHTML = getDialog(pokemonCache[id], pokemonCache[id].types[0], getTypesHtml(pokemonCache[id]), getShownIds().indexOf(id) === 0 ? "hidden-button" : "")
     switchTab("about", id)
     if (!dialog.open) {
         dialog.showModal()
@@ -105,17 +123,14 @@ async function openDialog(id) {
     document.body.style.overflow = "hidden"
 }
 
-
 function getShownIds() {
     return isSearching ? searchResultIds : loadedPokemonIds
 }
-
 
 async function loadMorePokemon() {
     offset = offset + limit
     await fetchData(limit, offset)
 }
-
 
 async function nextPokemon(id, step) {
     let index = getShownIds().indexOf(id) + step
@@ -137,7 +152,7 @@ function switchTab(tab, id) {
 
     document.getElementById("about").classList.toggle("is-clicked", isAbout)
     document.getElementById("base-stats").classList.toggle("is-clicked", !isAbout)
-    document.getElementById("infos").innerHTML = isAbout ? getDialogAboutSection(dialogPokemon) : getDialogBaseStatsSection(dialogPokemon)
+    document.getElementById("infos").innerHTML = isAbout ? getDialogAboutSection(dialogPokemon, getAbilitiesHtml(dialogPokemon)) : getDialogBaseStatsSection(dialogPokemon)
 }
 
 

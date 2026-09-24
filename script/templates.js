@@ -3,24 +3,20 @@ function getNotFoundMessage() {
     return `<p class="not-found" data-id="not-found">No match found.</p>`
 }
 
-function getcard(id, name, type, img) {
-    let mainType = type[0]
-
+function getcard(id, name, mainType, typesText, img) {
     return `
     <div class="card" data-id="card" role="button" tabindex="0" aria-label="Open details of ${name}" onclick="openDialog(${id})" onkeydown="if (event.key === 'Enter') openDialog(${id})">
         <h4 class="header type-${mainType}">${id} ${name}</h4>
 
         <img class="pokemon-img" data-id="card-image" src="${img}" alt="Image of ${name}">
         <div class="type type-${mainType}">
-            ${type.join('   ')}
+            ${typesText}
         </div>
     </div>
     `
 }
 
-function getDialog(dialogPokemon, isFirst) {
-    let mainType = dialogPokemon.types[0]
-
+function getDialog(dialogPokemon, mainType, typesHtml, prevButtonClass) {
     return `
     <div class="dialog-content" data-id="overlay-pokemon-name">
         <div class="dialog-header">
@@ -30,7 +26,7 @@ function getDialog(dialogPokemon, isFirst) {
         </div>
 
         <div class="type-img">
-            <div id="dialog-types">${dialogPokemon.types.map(type => `<div class="type-div">${type}</div>`).join('')}</div>
+            <div id="dialog-types">${typesHtml}</div>
             <img class="dialog-img" data-id="dialog-image" src="${dialogPokemon.img}" alt="Image of ${dialogPokemon.name}">
         </div>
 
@@ -45,7 +41,7 @@ function getDialog(dialogPokemon, isFirst) {
             </div>
 
             <div class="switch-buttons">
-                <button class="next-before-button ${isFirst ? 'hidden-button' : ''}" data-id="prev-button" aria-label="Previous Pokemon" onclick="nextPokemon(${dialogPokemon.id}, -1)">←</button>
+                <button class="next-before-button ${prevButtonClass}" data-id="prev-button" aria-label="Previous Pokemon" onclick="nextPokemon(${dialogPokemon.id}, -1)">←</button>
                 <button class="next-before-button" data-id="next-button" aria-label="Next Pokemon" onclick="nextPokemon(${dialogPokemon.id}, 1)">→</button>
             </div>
         </div>
@@ -53,7 +49,15 @@ function getDialog(dialogPokemon, isFirst) {
     `
 }
 
-function getDialogAboutSection(dialogPokemon) {
+function getTypeTemplate(type) {
+    return `<div class="type-div">${type}</div>`
+}
+
+function getAbilityTemplate(ability) {
+    return `<li>${ability}</li>`
+}
+
+function getDialogAboutSection(dialogPokemon, abilitiesHtml) {
     return `
     <table>
         <tr>
@@ -70,14 +74,10 @@ function getDialogAboutSection(dialogPokemon) {
         </tr>
         <tr>
             <td>Abilities:</td>
-            <td><ul class="abilities">${dialogPokemon.abilities.map(ability => `<li>${ability}</li>`).join('')}</ul></td>
+            <td><ul class="abilities">${abilitiesHtml}</ul></td>
         </tr>
     </table>
     `
-}
-
-function getStatValue(stats, name) {
-    return stats.find(stat => stat.name === name).value
 }
 
 function getDialogBaseStatsSection(dialogPokemon) {
