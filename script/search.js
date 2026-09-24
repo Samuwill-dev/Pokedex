@@ -2,12 +2,21 @@ let allPokemonNames = []
 let searchRunId = 0 
 let isSearching = false
 
-document.getElementById("search-input").addEventListener("input", (event) => {
+initSearch()
+
+function initSearch() {
+    let searchInput = document.getElementById("search-input")
+    searchInput.addEventListener("input", onSearchInput)
+    searchInput.addEventListener("keydown", onSearchKeydown)
+}
+
+function onSearchInput(event) {
     if (event.target.value.trim() === "") resetSearch()
-});
-document.getElementById("search-input").addEventListener("keydown", (event) => {
+}
+
+function onSearchKeydown(event) {
     if (event.key === "Enter") search(event.target.value)
-});
+}
 
 function search(value) {
     let smallValue = value.trim().toLowerCase()
