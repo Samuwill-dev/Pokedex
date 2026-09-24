@@ -8,7 +8,7 @@ document.getElementById("search-input").addEventListener("keydown", (event) => {
 
 let allPokemonNames = [] 
 let searchRunId = 0 
-let isSearching = false /
+let isSearching = false
 
 function search(value) {
     let smallValue = value.trim().toLowerCase()
