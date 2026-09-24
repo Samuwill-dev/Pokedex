@@ -1,5 +1,20 @@
 /* hier kommen z.b. Buttons styls rein, die man immer wieder braucht */
 
+.loading-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 40px auto;
+}
+
+.loading-screen img {
+    width: 800px;
+}
+
+.loading-screen.hidden {
+    display: none;
+}
+
 .load-more-btn {
     display: flex;
     align-items: center;

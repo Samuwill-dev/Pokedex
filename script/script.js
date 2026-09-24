@@ -11,20 +11,24 @@ let totalCount = 0 // gesamtanzahl aller pokemon in der api
 let pokemonCache = {} // alle geladenen pokemon mit der id als key, für das dialog fenster
 
 async function fetchData(limit, offset) {
+    showLoadingScreen()
+
     let response = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`)
     let apidata = await response.json();
     totalCount = apidata.count
 
+    let newPokemon = []
     for (let indexFromApiData = 0; indexFromApiData < apidata.results.length; indexFromApiData++) {
         let pokemonName = apidata.results[indexFromApiData].name
-        await fetchName(pokemonName)
+        newPokemon.push(await fetchAndCacheByName(pokemonName))
     }
-}
 
-async function fetchName(name) {
-    let pokemon = await fetchAndCacheByName(name)
+    hideLoadingScreen()
+
     if (!isSearching) {
-        document.getElementById("card-section").innerHTML += getcard(pokemon.id, pokemon.name, pokemon.types, pokemon.img)
+        for (let index = 0; index < newPokemon.length; index++) {
+            document.getElementById("card-section").innerHTML += getcard(newPokemon[index].id, newPokemon[index].name, newPokemon[index].types, newPokemon[index].img)
+        }
     }
 }
 
@@ -50,6 +54,14 @@ async function fetchAndCacheByName(name) {
     loadedPokemon.pokemonImg.push(pokemon.img)
 
     return pokemon
+}
+
+function showLoadingScreen() {
+    document.getElementById("loading-screen").classList.remove("hidden")
+}
+
+function hideLoadingScreen() {
+    document.getElementById("loading-screen").classList.add("hidden")
 }
 
 
