@@ -1,14 +1,13 @@
-// show the list, if search 0
+let allPokemonNames = [] 
+let searchRunId = 0 
+let isSearching = false
+
 document.getElementById("search-input").addEventListener("input", (event) => {
     if (event.target.value.trim() === "") resetSearch()
 });
 document.getElementById("search-input").addEventListener("keydown", (event) => {
     if (event.key === "Enter") search(event.target.value)
 });
-
-let allPokemonNames = [] 
-let searchRunId = 0 
-let isSearching = false
 
 function search(value) {
     let smallValue = value.trim().toLowerCase()
@@ -22,7 +21,6 @@ function search(value) {
     }
 }
 
-// load all pokemon
 async function searchPokemon(smallValue) {
     let runId = ++searchRunId
     isSearching = true
@@ -43,7 +41,6 @@ function prepareSearchResults(resultCount) {
     document.querySelector('[data-id="load-more-button"]').classList.add("hidden")
 }
 
-// zeigt die treffer nacheinander an, sobald sie geladen sind
 async function renderSearchResults(matchingNames, runId) {
     for (let index = 0; index < matchingNames.length; index++) {
         let pokemon = await fetchAndCacheByName(matchingNames[index])
@@ -54,13 +51,11 @@ async function renderSearchResults(matchingNames, runId) {
     }
 }
 
-
 async function fetchAllPokemonNames() {
     let apidata = await fetchJson(`https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0`)
     allPokemonNames = apidata.results.map(pokemon => pokemon.name)
 }
 
-// show normal pokemon
 function resetSearch() {
     searchRunId++
     isSearching = false

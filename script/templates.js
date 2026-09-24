@@ -1,4 +1,3 @@
-
 function getNotFoundMessage() {
     return `<p class="not-found" data-id="not-found">No match found.</p>`
 }

@@ -24,7 +24,6 @@ async function fetchJson(url) {
     return await response.json()
 }
 
-// load and cache pokemon
 async function fetchAndCacheByName(name) {
     let knownPokemon = Object.values(pokemonCache).find(pokemon => pokemon.name.toLowerCase() === name.toLowerCase())
     if (knownPokemon) {
@@ -52,7 +51,6 @@ function hideLoadingScreen() {
     document.querySelector('[data-id="load-more-button"]').disabled = false
 }
 
-// data for dialog
 function cachePokemon(apidata) {
     let stats = getStats(apidata)
     return {
@@ -68,7 +66,6 @@ function cachePokemon(apidata) {
     }
 }
 
-// some forms have no home sprite, so fall back to other images
 function getPokemonImage(sprites) {
     return sprites.other.home.front_default
         || sprites.other["official-artwork"].front_default
@@ -100,7 +97,6 @@ function getStats(apidata) {
     return { hp, attack, defense, spAtk, spDef, speed, total }
 }
 
-// load species at cklick on it
 async function loadSpecies(pokemon) {
     if (pokemon.species) {
         return
@@ -155,11 +151,9 @@ function switchTab(tab, id) {
     document.getElementById("infos").innerHTML = isAbout ? getDialogAboutSection(dialogPokemon, getAbilitiesHtml(dialogPokemon)) : getDialogBaseStatsSection(dialogPokemon)
 }
 
-
 function closeDialog() {
     document.getElementById("pokemon-dialog").close();
 }
-
 
 function closeDialogOnBackdropClick(event) {
     if (event.target.id === "pokemon-dialog") {
